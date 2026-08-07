@@ -16,7 +16,6 @@ function getStored<T>(key: string, defaultValue: T): T {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (e) {
-    console.error('LocalStorage read error:', e);
     return defaultValue;
   }
 }
@@ -38,11 +37,8 @@ export class ERPStore {
   static saveParty(party: Party): Party {
     const parties = this.getParties();
     const index = parties.findIndex(p => p.id === party.id);
-    if (index >= 0) {
-      parties[index] = { ...party, updated_at: new Date().toISOString() };
-    } else {
-      parties.push(party);
-    }
+    if (index >= 0) parties[index] = { ...party, updated_at: new Date().toISOString() };
+    else parties.push(party);
     setStored(STORAGE_KEYS.PARTIES, parties);
     this.addAuditLog('parties', party.id, index >= 0 ? 'UPDATE' : 'INSERT', party);
     return party;
@@ -55,11 +51,8 @@ export class ERPStore {
   static saveProduct(product: Product): Product {
     const products = this.getProducts();
     const index = products.findIndex(p => p.id === product.id);
-    if (index >= 0) {
-      products[index] = { ...product, updated_at: new Date().toISOString() };
-    } else {
-      products.push(product);
-    }
+    if (index >= 0) products[index] = { ...product, updated_at: new Date().toISOString() };
+    else products.push(product);
     setStored(STORAGE_KEYS.PRODUCTS, products);
     this.addAuditLog('products', product.id, index >= 0 ? 'UPDATE' : 'INSERT', product);
     return product;
@@ -88,11 +81,8 @@ export class ERPStore {
   static saveInvoice(invoice: Invoice): Invoice {
     const invoices = this.getInvoices();
     const index = invoices.findIndex(i => i.id === invoice.id);
-    if (index >= 0) {
-      invoices[index] = { ...invoice, updated_at: new Date().toISOString() };
-    } else {
-      invoices.unshift(invoice);
-    }
+    if (index >= 0) invoices[index] = { ...invoice, updated_at: new Date().toISOString() };
+    else invoices.unshift(invoice);
     setStored(STORAGE_KEYS.INVOICES, invoices);
     this.addAuditLog('invoices', invoice.id, index >= 0 ? 'UPDATE' : 'INSERT', invoice);
     return invoice;
@@ -115,5 +105,10 @@ export class ERPStore {
     };
     logs.unshift(log);
     setStored(STORAGE_KEYS.AUDIT, logs);
+  }
+
+  static clearAllData(): void {
+    if (typeof window === 'undefined') return;
+    Object.values(STORAGE_KEYS).forEach(key => localStorage.removeItem(key));
   }
 }

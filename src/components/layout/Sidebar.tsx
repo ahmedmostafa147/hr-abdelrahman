@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
-  Users,
+  UserCheck,
+  Truck,
+  Scale,
   Package,
   Boxes,
   ShoppingCart,
@@ -20,7 +22,9 @@ import {
 
 const NAV_ITEMS = [
   { href: '/', label: 'لوحة التحكم', icon: LayoutDashboard },
-  { href: '/parties', label: 'العملاء والموردين', icon: Users },
+  { href: '/customers', label: 'العملاء', icon: UserCheck },
+  { href: '/suppliers', label: 'الموردين', icon: Truck },
+  { href: '/opening-balances', label: 'الأرصدة الافتتاحية', icon: Scale },
   { href: '/products', label: 'المنتجات والأصناف', icon: Package },
   { href: '/inventory', label: 'حركات المخزن', icon: Boxes },
   { href: '/sales', label: 'فواتير المبيعات', icon: ShoppingCart },
@@ -56,20 +60,20 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-bold'
                   : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
               <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-800 bg-slate-950 text-xs text-slate-400 text-center">
+      <div className="p-3 border-t border-slate-800 bg-slate-950 text-[10px] text-slate-400 text-center">
         الإصدار 1.0.0 — قيد مزدوج محمي
       </div>
     </aside>
