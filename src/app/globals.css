@@ -51,7 +51,7 @@
 
 body {
   direction: rtl;
-  font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-ibm-arabic), 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
   background-color: #f8fafc;
   color: #0f172a;
 }
